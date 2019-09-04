@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Ajax POST Demo</title>
+<script src="../js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(function() {
+		$("#loadAjax").on("click", function() {
+			$.ajax({
+				//type : 'GET',
+				//url : 'member_json.jsp?start=0&length=20',
+				type : 'POST',
+				url : 'member_json.jsp',
+				data : {"start":0,"length":20},
+				dataType : 'json', //xml,html
+				error : function() {
+					alert("Json Load Error");
+				},
+				success : function(obj) {
+					console.log(obj);
+					//obj.items;
+					const itemsArray = obj.item;
+					let msg = '';
+					for (let i = 0; i < itemsArray.length; i++) {
+						msg += "<tr>";
+						let phone = itemsArray[i].phone;
+						let name = itemsArray[i].name;
+						let regdate = itemsArray[i].regdate;
+						let seq = itemsArray[i].seq;
+						let email = itemsArray[i].email;
+						let id = itemsArray[i].id;
+						msg += "<td>" + seq + "</td>";
+						msg += "<td>" + name + "</td>";
+						msg += "<td>" + id + "</td>";
+						msg += "<td>" + email + "</td>";
+						msg += "<td>" + phone + "</td>";
+						msg += "<td>" + regdate + "</td>";
+						msg += "</tr>";
+					}
+					$("#listMember").children().remove();
+					$("#listMember").html(msg);
+				}
+			});
+		});
+	});
+</script>
+
+</head>
+<body>
+<table>
+	<colgroup>
+		<col width="10%" />
+		<col width="15%" />
+		<col width="15%" />
+		<col width="20%" />
+		<col width="20%" />
+		<col width="20%" />
+	</colgroup>
+	<thead>
+		<tr>
+			<th>번호</th>
+			<th>이름</th>
+			<th>아이디</th>
+			<th>이메일</th>
+			<th>핸드폰번호</th>
+			<th>등록날짜</th>
+		</tr>
+	</thead>
+	<tbody id="listMember">
+		
+	</tbody>
+	</table>
+	<br>
+	<button id="loadAjax">Ajax 불러오기</button>
+	<script>
+		
+	</script>
+</body>
+</html>

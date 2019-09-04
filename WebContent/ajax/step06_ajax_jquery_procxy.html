@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Ajax POST Demo</title>
+<script src ="../js/jquery-3.4.1.min.js"></script>
+<script>
+	$(function(){
+		$.ajax({ //dataType이 jsonp이면 ajax가 아니다. 착각하지말것.function이 돌고있을뿐.!! json이면 ajax를 call해준다.
+			type : 'GET',
+			url : 'naver_book_procxy.jsp', //외부url을 가져오면 jsonp로 써줘야 에러가 나지않는다.//내부에서 불러올수 있으면 json으로 쓰면 된다.
+			dataType : 'json',
+			//jsonp : 'call', //callback key를 입력하면 함수 이름은 내부적으로 정한다.
+			success : function(json){
+				$("#divMessage").html(JSON.stringify(json));
+			}
+			
+		});
+		
+	});
+</script>
+<head>
+<body>
+	<div id="divMessage"></div> 
+</head>
+</html>

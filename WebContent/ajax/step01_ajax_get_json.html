@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax Get Demo</title>
+    <script>
+    	var xhr;
+    	try{
+    		xhr = new XMLHttpRequest();
+    	}catch(e){
+    		xhr = new ActiveObject("Msxml2.XMLHTTP");
+    	}	
+    	if(xhr == null){
+    		alert('Error xhr object');
+    	}
+    	
+    </script>
+</head>
+<body>
+    <div id = "sung"></div>
+    <button id="loadAjax">Ajax 불러오기</button>
+    <script>
+    	document.getElementById("loadAjax").addEventListener("click",function(){
+    		xhr.open("GET",'member_json.jsp?start=30&length=20',true);
+    		xhr.onreadystatechange = function(){
+    			//onreadystatechange 함수는 url에서 응답올때까지 기다린다.
+    			if(xhr.readyState == 4 && xhr.status == 200){
+    				//정상적인 경우
+    				console.log(xhr.responseText);
+    				//parse 함수는 문자열을 javascript 객체로 변환해 준다.
+    				const obj = JSON.parse(xhr.responseText);
+    				//obj.item는 배열
+    				const itemsArray = obj.item;
+    				let msg = '';
+    				for(let i=0; i<itemsArray.length; i++){
+    					let phone = itemsArray[i].phone;
+    					let name = itemsArray[i].name;
+    					let regdate = itemsArray[i].regdate;
+    					let seq = itemsArray[i].seq;
+    					let email = itemsArray[i].email;
+    					msg+= seq+","+name+","+ email+","+regdate+"<br>";
+    					//console.log(name);
+    				}
+    				document.getElementById("sung").innerHTML = msg;
+    			}
+    		}
+    		xhr.send(null);
+    	});
+    </script>
+</body>
+</html>

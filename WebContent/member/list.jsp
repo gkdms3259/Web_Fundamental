@@ -85,7 +85,7 @@
 									<th scope="col">등록날짜</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id = "table_body">
 							<%
 								if(list.size() != 0){
 									for(int i=0;i<list.size();i++){
@@ -142,7 +142,7 @@
 							<ul class="pagination pagination-lg justify-content-center">
 								<%if(currentBlock != 1){ %>	
 								<li class="page-item">
-									<a class="page-link" href="list.jsp?page=<%=startPage-1 %>" tabindex="-1">&laquo;</a>
+									<a class="page-link" href="javascript:util.pageLoading('<%=startPage-1%>','<%=length %>');" tabindex="-1">&laquo;</a>
 								</li>
 								<%}else{ %>
 								<li class="page-item disabled">
@@ -152,11 +152,11 @@
 								
 								
 								<%for(int i=startPage;i<=endPage;i++){ %>
-								<li class="page-item <%if(cPage==i){ %>active<%}%>"><a class="page-link" href="list.jsp?page=<%=i%>"><%=i %></a></li>
+								<li class="page-item <%if(cPage==i){ %>active<%}%>"><a class="page-link" href="javascript:util.pageLoading('<%=i%>','<%=length %>');"><%=i%></a></li>
 								<%}%>  <%-- <%if(cPage==i){ %>active<%}%> 이거는 현재 페이지에 색을 넣어주는 것. --%>
 								<%if(currentBlock != totalBlock){ %>
 								<li class="page-item">
-									<a class="page-link" href="list.jsp?page=<%=endPage+1%>">&raquo;</a>
+									<a class="page-link" href="javascript:util.pageLoading('<%=endPage+1%>','<%=length %>');">&raquo;</a>
 								</li>	
 									<%}else{ %>
 								<li class="page-item disabled">
@@ -176,6 +176,44 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	const util ={"pageLoading" : function(p,len){
+		let url =
+			'http://localhost/member/list.jsp?page='+p+'&length='+len;
+		history.pushState(null,null,url);
+		//console.log(p,len);
+		$.ajax({
+			type : 'GET', //가져올때는 GET 저장할때는 POST
+			url : 'list_ajax.jsp?page='+p+"&length="+len,
+			dataType : 'html',  //json,xml,html
+			error : function(){
+				alert('HTML loading error');
+			},
+			success : function(html){
+				$("#table_body").children().remove();
+				$("#table_body").html(html);		
+			}
+		});
+	}}
+	
+	$(".pagination li").on("click",function(){
+		$(this).addClass("active"); //누르는것들 색으로 표시
+		$(this).siblings().removeClass("active"); //누른것만 색으로 표시가 되고 나머지들은 사라지게.
+	});
+	
+	
+</script>
 <%@ include file="../inc/footer.jsp"%>
+
+
+
+
+
+
+
+
+
+
 
 
