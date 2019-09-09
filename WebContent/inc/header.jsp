@@ -1,4 +1,9 @@
+<%@page import="kr.co.kic.dev1.dto.MemberDto"%>
 <%@ page pageEncoding="UTF-8"%>
+<% 
+	MemberDto memberDto = (MemberDto)session.getAttribute("member");
+%>
+ 
 <!doctype html>
 <html lang="en">
 
@@ -36,21 +41,36 @@
 				<li class="nav-item active"><a class="nav-link" href="/">Home</a>
 				</li>
 				<li class="nav-item"><a class="nav-link"
-					href="/notice/list.jsp">Noitce</a></li>
+					href="/notice/list.jsp">Notice</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/notice/list.jsp">Emp</a></li>
+					href="/emp/list.jsp">Emp</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/notice/list.jsp">Dept</a></li>
+					href="/dept/list.jsp">Dept</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/notice/list.jsp">Member</a></li>
+					href="/member/list.jsp">Member</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/file/index.jsp">Upload</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/crawling/index.jsp">Crawling</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/qrcode/index.jsp">Qrcode</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/shorten/index.jsp">Shorten URL</a></li>
+
 
 			</ul>
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="/member/register.jsp"><i class="fa fa-file-text-o"></i>Register</a>
+				<li class="nav-item">
+				<%if(memberDto == null){%>
+				<a class="nav-link" href="/member/register.jsp"><i class="fa fa-file-text-o"></i>Rsgister</a></li>
+				<%}%>
 				</li>
-				<li class="nav-item"><a class="nav-link"
-					href="/member/login.jsp"><i class="fa fa-user"></i>Login</a></li>
+				<li class="nav-item">
+				<%if(memberDto == null){%>
+				<a class="nav-link" href="/member/login.jsp"><i class="fa fa-user"></i>Login</a></li>
+				<%}else{ %>
+				<a class="nav-link" href="/member/logout.jsp"><i class="fa fa-user"></i>Logout(<%=memberDto.getName()%>님 환영합니다.)</a></li>
+				<%} %>
 			</ul>
 		</div>
 	</nav>

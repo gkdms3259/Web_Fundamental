@@ -122,13 +122,14 @@ String tempPage = request.getParameter("page");
 									return;
 								}
 								
+	<%--모르겠음 ㅠㅠ--%>			
 								if($("#phone").val().length != 11){
 									$("#phoneMessage").html("<span class='text-danger'> -를 제외하고 휴대폰 번호를 적어주세요. </span>");
 									$("#phone").addClass("is-invalid"); 
 									$("#phone").focus();  
 									return;
 								}
-								
+							
 								
 								f. submit();
 						
